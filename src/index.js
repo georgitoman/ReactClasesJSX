@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App/App';
+//import App from './components/App/App';
 //import Comics from './components/Comics/Comics';
 import reportWebVitals from './reportWebVitals';
+import EjemploSimple from './components/Formularios/EjemploSimple';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <EjemploSimple />
   </React.StrictMode>,
   document.getElementById('root')
 );
