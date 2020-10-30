@@ -42,6 +42,13 @@ class Comics extends Component {
                 descripcion: "Murcielago"
             }
         ]
+        , favorito: null
+    }
+
+    seleccionarFavorito = comic => {
+        this.setState({
+            favorito: comic
+        });
     }
 
     crearComic = () => {
@@ -66,6 +73,22 @@ class Comics extends Component {
         var comics = this.state.comics;
         comics.splice(index, 1);
         this.setState({
+            comics: comics, favorito: null
+        });
+    }
+
+    updateComic = (index) => {
+        var titulo = document.getElementById("cajatitulo").value;
+        var imagen = document.getElementById("cajaimagen").value;
+        var descripcion = document.getElementById("cajadescripcion").value;
+
+        var comics = this.state.comics;
+        var comic = comics[index];
+        comic.titulo = titulo;
+        comic.imagen = imagen;
+        comic.descripcion = descripcion;
+
+        this.setState({
             comics: comics
         });
     }
@@ -83,11 +106,32 @@ class Comics extends Component {
                     Nuevo comic
                 </button>
 
+                {this.state.favorito &&
+                    (<React.Fragment>
+                        <div style={{ backgroundColor: "lightgreen" }}>
+                            <h1 style={{ color: "blue" }}>
+                                {this.state.favorito.titulo}
+                            </h1>
+                            <img src={this.state.favorito.imagen} />
+                        </div>
+                    </React.Fragment>)
+                }
                 {this.state.comics.map((comic, index) => {
-                    return (<Comic titulo={comic.titulo}
-                        imagen={comic.imagen}
-                        descripcion={comic.descripcion} />);
-                })}
+                    return (
+                        <React.Fragment>
+                            <Comic comic={comic}
+                                index={index}
+                                key={index}
+                                seleccionarFavorito={this.seleccionarFavorito}
+                                eliminarComic={this.eliminarComic} />
+                            <button key={index} style={{ backgroundColor: "blue", color: "white" }}
+                                onClick={() => {
+                                    this.updateComic(index);
+                                }}>Modificar Comic</button>
+                        </React.Fragment>
+                    )
+                }
+                )}
             </div>
         );
     }
